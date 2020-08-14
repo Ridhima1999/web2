@@ -27,7 +27,7 @@ app.post('/new',function(req,res){
        res.send("item saved to db");
    })
    .catch(err=>{
-       res.status(400).send("unable to save db")
+       res.status(400).send(err.message+" unable to save db")
    })
 
 })
