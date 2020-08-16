@@ -14,21 +14,21 @@ app.use('/', function(req, res, next){
 app.get('/',function(req,res){
     res.sendFile(__dirname+"/frontend/html/index.html");
 })
-var userSchema = new mongoose.Schema({
-    email:String,
-    name:String,
-    age:Number,
+var newSchema = new mongoose.Schema({
+    email:{type:Number, index:true},
+    name:{type:String , require:true},
+    age:{type:Number},
 });
 
-var User = mongoose.model('User', userSchema);
+var user = mongoose.model('user', newSchema);
 app.post('/new',function(req,res){
-   var myData=new User(req.body);
+   var myData=new user(req.body);
    myData.save().then(item=>{
        res.send("item saved to db");
    })
    .catch(err=>{
-       res.status(400).send("unable to save db")
-   })
+    res.status(400).send(err.message+" unable to save db")
+})
 
 })
 
